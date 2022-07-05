@@ -1,20 +1,17 @@
-#include <limits.h>
 #include "main.h"
 /**
-* print_last_digit - prints the last digit of a numer.
-* @n: digit to find the last place of.
-* Return: The last digit.
+* print_last_digit - prints last digit of integer input
+* @n: integer to modify
+*
+* Return: l
 */
 int print_last_digit(int n)
 {
-if (n < 0)
-n = n * -1;
-_putchar((n % 10) + '0');
-return (n % 10);
-}
-int r;
-r = print_last_digit(INT_MIN);
-_putchar('0' + r);
-_putchar('\n');
-return (0);
+int l, p;
+l = n % 10;
+if (l <  0)
+l = -l;
+p = '0' + l;
+_putchar(p);
+return (l);
 }

@@ -1,113 +1,68 @@
-#include "main.h"
-#include <limits.h>
-
+#include <stdlib.h>
+#include <stdio.h>
 /**
- * str_len - finds string length
- * @str: input pointer to string
- * Return: length of string
- */
-int str_len(char *str)
+  * _isdigit - tells if the string consists of digits
+  * @argv: pointer to current item in argument
+  * Return: return 0 if all digits, 1 if not all digits.
+  */
+int _isdigit(char *argv)
 {
-int len;
+	int i;
 
-for (len = 0; *str != '\0'; len++)
-len++, str++;
-return (len / 2);
+	i = 0;
+	while (argv[i])
+	{
+		if (argv[i] >= '0' && argv[i] <= '9')
+			i++;
+		else
+			return (1);
+	}
+	return (0);
 }
-
 /**
- * _calloc - allocates memory for an array using malloc
- * @bytes: bytes of memory needed per size requested
- * @size: size in bytes of each element
- * Return: pointer to the allocated memory
- */
-void *_calloc(unsigned int bytes, unsigned int size)
+  * _atoi - converts a string of ascii digits to the values they represent
+  * @s: pointer to the source string
+  * Return: value of digits
+  */
+int _atoi(char *s)
 {
-unsigned int i;
-char *p;
+	int i, result;
 
-if (bytes == 0 || size == 0)
-return (NULL);
-if (size >= UINT_MAX / bytes || bytes >= UINT_MAX / size)
-return (NULL);
-p = malloc(size * bytes);
-if (p == NULL)
-return (NULL);
-for (i = 0; i < bytes * size; i++)
-p[i] = 0;
-return ((void *)p);
+	i = result = 0;
+	while (s[i])
+	{
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			result *= 10;
+			result += (s[i] - '0');
+		}
+		i++;
+	}
+	return (result);
 }
-
 /**
- * add_arrays - adds 2 arrays of ints
- * @mul_result: pointer to array with numbers from product
- * @sum_result: pointer to array with numbers from total sum
- * @len_r: length of both arrays
- * Return: void
- */
-void add_arrays(int *mul_result, int *sum_result, int len_r)
+  * main - main function call
+  * @argc: argument count
+  * @argv: 2D array of arguments
+  * Return: return 0 on success, 98 on failure
+  */
+int main(int argc, char *argv[])
 {
-int i = 0, len_r2 = len_r - 1, carry = 0, sum;
+	int i;
 
-while (i < len_r)
-{
-sum = carry + mul_result[len_r2] + sum_result[len_r2];
-sum_result[len_r2] = sum % 10;
-carry = sum / 10;
-i++;
-len_r2--;
+	malloc();
+	if (argc != 3)
+	{
+		printf("Error\n");
+		exit(98);
+	}
+	for (i = 1; i < argc; i++)
+	{
+		if (_isdigit(argv[i]))
+		{
+			printf("Error\n");
+			exit(98);
+		}
+	}
+	return (0);
 }
-}
-
-/**
- * is_digit - checks for digits
- * @c: input character to check for digit
- * Return: 0 failure, 1 success
- */
-int is_digit(char c)
-{
-if (c >= '0' && c <= '9')
-return (1);
-printf("Error\n");
-return (0);
-}
-
-/**
- * multiply - multiplies 2 #'s, prints result, must be 2 #'s
- * @num1: factor # 1 (is the smaller of 2 numbers)
- * @len_1: length of factor 1
- * @num2: factor # 2 (is the larger of 2 numbers)
- * @len_2: length of factor 2
- * @len_r: length of result arrays
- * Return: 0 fail, 1 success
- */
-int *multiply(char *num1, int len_1, char *num2, int len_2, int len_r)
-{
-int i = 0, i1 = len_1 - 1;
-int i2, product, carry, digit, *mul_result, *sum_result;
-
-sum_result = _calloc(sizeof(int), (len_r));
-while (i < len_1)
-{
-mul_result = _calloc(sizeof(int), len_r);
-i2 = len_2 - 1, digit = (len_r - 1 - i);
-if (!is_digit(num1[i1]))
-return (NULL);
-carry = 0;
-while (i2 >= 0)
-{
-if (!is_digit(num2[i2]))
-return (NULL);
-product = (num1[i1] - '0') * (num2[i2] - '0');
-product += carry;
-mul_result[digit] += product % 10;
-carry = product / 10;
-digit--, i2--;
-}
-add_arrays(mul_result, sum_result, len_r);
-free(mul_result);
-i++, i1--;
-}
-return (sum_result);
-}
-

@@ -1,15 +1,17 @@
-#ifndef _LISTS_H_
-#define _LISTS_H_
+#ifndef _LISTS_H
+#define _LISTS_H
 
-#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 /**
- * struct listint_s - singly linked list
- * @n: integer
- * @next: points to the next node
- *
- * Description: singly linked list node structure
- * for Holberton project
- */
+* struct listint_s - singly linked list
+* @n: integer
+* @next: points to the next node
+*
+* Description: singly linked list node structure
+* for ALX project
+*/
 typedef struct listint_s
 {
 	int n;
@@ -32,4 +34,4 @@ size_t print_listint_safe(const listint_t *head);
 size_t free_listint_safe(listint_t **h);
 listint_t *find_listint_loop(listint_t *head);
 
-#endif /* _LISTS_H_ */
+#endif
